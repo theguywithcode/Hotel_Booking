@@ -1,0 +1,30 @@
+<!-- bookings/templates/bookings/hotel_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel List</title>
+    <!-- Add Bootstrap CDN link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Hotel List</h1>
+        <ul class="list-group">
+            {% for hotel in hotels %}
+                <li class="list-group-item">
+                    <strong>{{ hotel.name }}</strong> - {{ hotel.address }}
+                    <br>
+                    Number of Rooms: {{ room_counts}}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js CDN links (if needed) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
