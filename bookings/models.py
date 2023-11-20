@@ -1,5 +1,6 @@
 
 from django.db import models
+from django.core.exceptions import ValidationError
 
 class Hotel(models.Model):
     name = models.CharField(max_length=100)
@@ -35,7 +36,20 @@ class Reservation(models.Model):
     check_out_date = models.DateField()
 
     def __str__(self):
-            return f"{self.guest_name} at {self.room.hotel} - Checkout at {self.check_out_date} "
+        return f"{self.guest_name} at {self.room.hotel} - Checkout at {self.check_out_date} "
+
+    def clean(self):
+        # Custom validation to check for overlapping reservations
+        overlapping_reservations = Reservation.objects.filter(
+            room=self.room,
+            check_in_date__lt=self.check_out_date,
+            check_out_date__gt=self.check_in_date,
+        ).exclude(pk=self.pk)
+
+        if overlapping_reservations.exists():
+            raise ValidationError(
+                f"There is already an active reservation for room {self.room.room_number} during this time period."
+            )
     
 
 class VisitingGuest(models.Model):
